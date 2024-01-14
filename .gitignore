@@ -1,0 +1,5 @@
+#Ignore big folders
+/**/node_modules
+
+#Small files dependency kind of file
+/**/package-lock.json
