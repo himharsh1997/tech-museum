@@ -4,7 +4,11 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
-app.get('/heath-check', (req, res) => {
+app.get('/signup', (req, res) => {
+    return res.status(200).send('Service is available');
+});
+
+app.get('/login', (req, res) => {
     return res.status(200).send('Service is available');
 });
 

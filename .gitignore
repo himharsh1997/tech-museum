@@ -3,3 +3,4 @@
 
 #Small files dependency kind of file
 /**/package-lock.json
+/**/.env
