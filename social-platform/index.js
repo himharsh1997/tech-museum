@@ -2,18 +2,14 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
+const UserRoutes = require('./app/routes/userRoute');
+
 app.use(bodyParser.json());
 
-app.get('/signup', (req, res) => {
-    return res.status(200).send('Service is available');
-});
-
-app.get('/login', (req, res) => {
-    return res.status(200).send('Service is available');
-});
+app.use('/user', UserRoutes);
 
 app.listen(3000, () => {
-    console.log(`Listening on server port ${SERVER_PORT} ...`);
+    console.log(`Listening on server port ${3000} ...`);
 });
 
 exports.app = app;

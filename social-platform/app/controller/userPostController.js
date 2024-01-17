@@ -10,7 +10,7 @@ const AuthBiz = require('../biz/authBiz');
 
 class AuthController extends BaseController {
 
-    async signup(req, res) {
+    async create(req, res) {
         const LOG_PREFIX = '[AuthController - signup] :';
         const authBizObj = new AuthBiz();
 
@@ -37,7 +37,7 @@ class AuthController extends BaseController {
         }
     }
 
-    async login(req, res) {
+    async delete(req, res) {
         const LOG_PREFIX = '[AuthController - login] :';
         const authBizObj = new AuthBiz();
 
