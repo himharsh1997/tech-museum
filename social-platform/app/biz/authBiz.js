@@ -1,10 +1,12 @@
 /**
  * @description Auth Biz
  * 
- * @author Fize
+ * @author Himanshu
  */
 
 const UserInfoRepository = require('../db/repository/userInfoRepository');
+const Auth0Utils = require('../utils/auth0Utils');
+const auth0Utils = new Auth0Utils();
 
 class AuthBiz {
 
@@ -16,6 +18,9 @@ class AuthBiz {
         const validationErrors = {};
         if (!opts?.username || !(typeof opts?.username == 'string')) {
             validationErrors.username = 'Username is empty or not alphanumeric';
+        }
+        if (!opts?.email || !(typeof opts?.email == 'string')) {
+            validationErrors.email = 'Email is empty or not alphanumeric';
         }
         if (!opts?.password || !(typeof opts?.password == 'string')) {
             validationErrors.password = 'Password is empty or not alphanumeric';
@@ -40,7 +45,7 @@ class AuthBiz {
 
         const userInfoRepositoryObj = new UserInfoRepository();
 
-        const userId = `auth|${new Date().getTime()}${Math.round(Math.random() * 1000)}`;
+        // let userId = `auth|${new Date().getTime()}${Math.round(Math.random() * 1000)}`;
 
         const userInfoFromDB = await userInfoRepositoryObj.getUser({ username: opts?.username });
         if (userInfoFromDB?.length) {
@@ -51,14 +56,18 @@ class AuthBiz {
         }
 
         const data = {
-            userId,
+            userId: null,
             username: opts?.username,
+            email: opts?.email,
             firstName: opts?.first_name,
             lastName: opts?.last_name,
             password: opts?.password,
             age: opts?.age,
         }
 
+        await auth0Utils.init();
+        const resp = await auth0Utils.signup({ email: opts?.email, username: opts?.username, password: opts?.password })
+        data.userId = resp.data?.user_id;
         await userInfoRepositoryObj.insertNewUser(data);
 
         const result = { ...opts, user_id: userId };
@@ -87,10 +96,10 @@ class AuthBiz {
 
         const userInfoRepositoryObj = new UserInfoRepository();
         const userInfoFromDB = await userInfoRepositoryObj.getUser({ username: opts?.username });
-        if(!userInfoFromDB?.length){
+        if (!userInfoFromDB?.length) {
             const validationErrorObj = new Error('Signup Validation Error');
             validationErrorObj.status = 400;
-            validationErrorObj.errors = { username: 'User or password is not matching any record'};
+            validationErrorObj.errors = { username: 'User or password is not matching any record' };
             throw new validationErrorObj;
         }
     }

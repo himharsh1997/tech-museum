@@ -1,7 +1,7 @@
 /**
  * @description Auth Biz
  * 
- * @author Fize
+ * @author Himanshu
  */
 
 const UserInfoRepository = require('../db/repository/userInfoRepository');

@@ -1,7 +1,7 @@
 /**
  * @description Name of tables
  * 
- * @author Fize
+ * @author Himanshu
  */
 
 module.exports = {

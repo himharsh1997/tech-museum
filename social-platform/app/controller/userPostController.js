@@ -1,7 +1,7 @@
 /**
  * @description AuthController
  * 
- * @author Fize
+ * @author Himanshu
  */
 
 const BaseController = require('./baseController');
