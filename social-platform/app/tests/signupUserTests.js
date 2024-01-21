@@ -1,16 +1,17 @@
 const axios = require('axios');
+require('dotenv').config('.env');
 
 (async () => {
     let authToken = null;
     // Auth0 Management API endpoint
-    const AUTH0_API_URL = `https://dev-p8o6d5cj.us.auth0.com/api/v2/users`; // Management API
+    const AUTH0_API_URL = process.env.AUTH0_API_MANAGEMENT_URL; // Management API
 
     const getAccessToken = async () => {
-        const response = await axios.post(`https://dev-p8o6d5cj.us.auth0.com/oauth/token`, {
+        const response = await axios.post(process.env.AUTH0_TOKEN_API_URL, {
             grant_type: 'client_credentials',
-            client_id: 'RH2Q8JqHuCqzZuSgxXVVQplYaQZIJdb5',
-            client_secret: '0JYFhI1hAtKGgYpYvulhlDSS6jeseurHArs0cNlVqxksT_M5Iy84QmqUxZHbBt1Z',
-            audience: 'https://dev-p8o6d5cj.us.auth0.com/api/v2/',
+            client_id: process.env.AUTH0_CLIENT_ID,
+            client_secret: process.env.AUTH0_CLIENT_SECRET,
+            audience: process.env.AUTH0_AUDIENCE,
         });
 
         authToken = response.data.access_token;
